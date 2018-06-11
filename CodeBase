@@ -1,0 +1,110 @@
+
+# coding: utf-8
+
+# In[21]:
+
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+get_ipython().magic('matplotlib inline')
+
+
+# In[4]:
+
+
+iris = pd.read_csv('Iris.csv')
+
+
+# In[6]:
+
+
+iris.describe()
+
+
+# In[9]:
+
+
+iris.head()
+
+
+# In[12]:
+
+
+iris.groupby('Species').size()
+
+
+# In[19]:
+
+
+iris.plot(kind='box', subplots=True, figsize=(12,12), layout=(5,5),sharex=False,sharey=False)
+
+
+# In[20]:
+
+
+iris.hist(figsize=(12,12))
+
+
+# In[22]:
+
+
+sns.pairplot(iris)
+
+
+# In[25]:
+
+
+X = iris[['Id', 'SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm']]
+y = iris['Species']
+
+
+# In[27]:
+
+
+from sklearn.cross_validation import train_test_split
+
+
+# In[29]:
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+
+
+# In[32]:
+
+
+from sklearn.linear_model import LogisticRegression
+
+
+# In[33]:
+
+
+lmModel = LogisticRegression()
+
+
+# In[34]:
+
+
+lmModel.fit(X_train,y_train)
+
+
+# In[39]:
+
+
+prediction= lmModel.predict(X_test)
+prediction
+
+
+# In[37]:
+
+
+from sklearn.metrics import classification_report
+
+
+# In[40]:
+
+
+print(classification_report(y_test,prediction))
+
